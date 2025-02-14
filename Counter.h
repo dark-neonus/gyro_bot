@@ -35,4 +35,7 @@ public:
 
   void add(int value) { setValue(_value + value); }
   void substract(int value) { setValue(_value - value); }
+
+  bool isMax() { return _value == _maxValue; }
+  bool isZero() { return _value == 0; }
 };
