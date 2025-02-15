@@ -27,8 +27,8 @@ public:
   std::function<void(std::shared_ptr<MenuTree>)> actionFunction;
 
   TreeNode(std::string text,
-           std::vector<std::shared_ptr<TreeNode>> sub_nodes_ = {},
-           std::function<void(std::shared_ptr<MenuTree>)> actionFunction_ = nullptr);
+           std::function<void(std::shared_ptr<MenuTree>)> actionFunction_ = nullptr,
+           std::vector<std::shared_ptr<TreeNode>> sub_nodes_ = {});
 
   std::string getText() { return _text; }
 
@@ -48,6 +48,7 @@ private:
   
 public:
   static const std::function<void(std::shared_ptr<MenuTree>)> do_nothing;
+  static const std::function<void(std::shared_ptr<MenuTree>)> go_back;
   static const std::function<void(std::shared_ptr<MenuTree>)> defaultActionFunction;
 
   static constexpr int FONT_SIZE = 1;
@@ -55,7 +56,7 @@ public:
   static constexpr int ELEMENT_PADDING = 10;
 
   MenuTree(std::vector<std::shared_ptr<TreeNode>> sub_nodes_ = {})
-    : _rootNode(std::make_shared<TreeNode>("root", sub_nodes_, MenuTree::do_nothing))
+    : _rootNode(std::make_shared<TreeNode>("root", MenuTree::do_nothing, sub_nodes_))
   {
     addPath(_rootNode);
   }
