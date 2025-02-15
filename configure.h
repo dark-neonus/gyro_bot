@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "MenuTree.h"
+#include "src/MenuTree.h"
 
 MenuListObject menu_list = MenuListObject();
 
@@ -12,7 +12,11 @@ void configureMenuList() {
   TreeNode live_mode = TreeNode("live");
   {
     live_mode.addNode(std::make_shared<TreeNode>("menu", MenuTree::go_back));
-    live_mode.addNode(std::make_shared<TreeNode>("hide UI", MenuTree::do_nothing));
+    live_mode.addNode(std::make_shared<TreeNode>("hide UI", 
+      [](std::shared_ptr<MenuTree> menuTree) {
+          Settings::show_ui = false;
+      })
+    );
   }
   TreeNode manual_mode = TreeNode("manual");
   {

@@ -1,5 +1,3 @@
-#include "Vec2.h"
-#include "ScreenObject.h"
 #pragma once
 
 #include <vector>
@@ -13,6 +11,9 @@
 #include <Adafruit_SSD1306.h>   // OLED library
 
 #include "RangeValueInt.h"
+
+#include "Vec2.h"
+#include "ScreenObject.h"
 
 class MenuTree;
 

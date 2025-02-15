@@ -1,6 +1,7 @@
 
-#include "Vec2.h"
-#include "Counter.h"
+#include "src/Vec2.h"
+#include "src/Counter.h"
+#include "src/Settings.h"
 #include "face.h"
 
 #include "display.h"
@@ -15,7 +16,7 @@ float dX_circle, dY_circle;
 
 
 
-Face face = Face(Vec2(SCREEN_WIDTH / 2 + 20, SCREEN_HEIGHT / 2));
+Face face = Face(Vec2(0.0f, 0.0f));
 
 // TreeNode default_menu = TreeNode;
 
@@ -46,8 +47,13 @@ void loop() {
 
   display.clearDisplay(); // Clear display buffer
   // display.drawCircle(display.width()/2 + dX_circle, display.height()/2 + dY_circle, 5, SSD1306_WHITE);
-  face.draw(display, Vec2(gX * deltaTime, gY * deltaTime) / 2);
-  menu_list.draw(display, Vec2(0.0f, 0.0f));
+  face.draw(display,
+    Vec2(SCREEN_WIDTH / 2 + (Settings::show_ui ? 20 : 0), SCREEN_HEIGHT / 2)
+    + Vec2(gX * deltaTime, gY * deltaTime) / 2
+  );
+  if (Settings::show_ui) {
+    menu_list.draw(display, Vec2(0.0f, 0.0f));
+  }
 
   events_handler(menu_list.menu);
 

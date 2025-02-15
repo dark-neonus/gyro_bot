@@ -5,8 +5,8 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-#include "Vec2.h"
-#include "ScreenObject.h"
+#include "src/Vec2.h"
+#include "src/ScreenObject.h"
 
 class Pupil : public ScreenObject {
 public:

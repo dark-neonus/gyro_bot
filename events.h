@@ -2,10 +2,12 @@
 
 #include <memory>
 
-#include "Vec2.h"
-#include "Counter.h"
+#include "src/Vec2.h"
+#include "src/Counter.h"
+#include "src/MenuTree.h"
+#include "src/Settings.h"
+
 #include "face.h"
-#include "MenuTree.h"
 
 #define LEFT_BUTTON_PIN 25
 #define UP_BUTTON_PIN 33
@@ -63,25 +65,45 @@ void events_handler(std::shared_ptr<MenuTree> menu_list) {
   if (left_button_counter.isMax()) {
     display.setCursor(SCREEN_WIDTH - 4 * 7, 5);
     display.print("L");
-    menu_list->goBack();
+    if (Settings::show_ui) {
+      menu_list->goBack();
+    }
+    else {
+      Settings::show_ui = true;
+    }
     left_button_counter.setValue(0);
   }
   if (up_button_counter.isMax()) {
     display.setCursor(SCREEN_WIDTH - 3 * 7, 5);
     display.print("U");
-    menu_list->selectPrevious();
+    if (Settings::show_ui) {
+      menu_list->selectPrevious();
+    }
+    else {
+      Settings::show_ui = true;
+    }
     up_button_counter.setValue(0);
   }
   if (down_button_counter.isMax()) {
     display.setCursor(SCREEN_WIDTH - 2 * 7, 5);
     display.print("D");
-    menu_list->selectNext();
+    if (Settings::show_ui) {
+      menu_list->selectNext();
+    }
+    else {
+      Settings::show_ui = true;
+    }
     down_button_counter.setValue(0);
   }
   if (right_button_counter.isMax()) {
     display.setCursor(SCREEN_WIDTH - 1 * 7, 5);
     display.print("R");
-    menu_list->performAction();
+    if (Settings::show_ui) {
+      menu_list->performAction();
+    }
+    else {
+      Settings::show_ui = true;
+    }
     right_button_counter.setValue(0);
   }
 }
