@@ -1,9 +1,11 @@
 #pragma once
 
+#include <memory>
+
 #include "Vec2.h"
 #include "Counter.h"
 #include "face.h"
-#include "menu_list.h"
+#include "MenuTree.h"
 
 #define LEFT_BUTTON_PIN 25
 #define UP_BUTTON_PIN 33
@@ -25,7 +27,7 @@ void eventsSetup() {
   pinMode(RIGHT_BUTTON_PIN, INPUT);
 }
 
-void events_handler(SideList& side_list) {
+void events_handler(std::shared_ptr<MenuTree> menu_list) {
   display.setTextColor(SSD1306_WHITE);
   display.setTextSize(1);
 
@@ -61,23 +63,25 @@ void events_handler(SideList& side_list) {
   if (left_button_counter.isMax()) {
     display.setCursor(SCREEN_WIDTH - 4 * 7, 5);
     display.print("L");
+    menu_list->goBack();
     left_button_counter.setValue(0);
   }
   if (up_button_counter.isMax()) {
     display.setCursor(SCREEN_WIDTH - 3 * 7, 5);
     display.print("U");
-    side_list.selectPrevious();
+    menu_list->selectPrevious();
     up_button_counter.setValue(0);
   }
   if (down_button_counter.isMax()) {
     display.setCursor(SCREEN_WIDTH - 2 * 7, 5);
     display.print("D");
-    side_list.selectNext();
+    menu_list->selectNext();
     down_button_counter.setValue(0);
   }
   if (right_button_counter.isMax()) {
     display.setCursor(SCREEN_WIDTH - 1 * 7, 5);
     display.print("R");
+    menu_list->performAction();
     right_button_counter.setValue(0);
   }
 }
