@@ -53,7 +53,7 @@ public:
   static const std::function<void(std::shared_ptr<MenuTree>)> defaultActionFunction;
 
   static constexpr int FONT_SIZE = 1;
-  static constexpr int LEFT_PADDING = 5;
+  static constexpr int LEFT_PADDING = 1;
   static constexpr int ELEMENT_PADDING = 10;
 
   MenuTree(std::vector<std::shared_ptr<TreeNode>> sub_nodes_ = {})
