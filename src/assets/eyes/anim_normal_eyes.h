@@ -1,13 +1,13 @@
-// C Array of blink.gif
+// C Array of normal_eyes.gif
 #pragma once
-#ifndef ANIMATION_BLINK
-#define ANIMATION_BLINK
+#ifndef ANIMATION_NORMAL_EYES
+#define ANIMATION_NORMAL_EYES
 #include <memory>
 #include <vector>
-#include "../Animation.h"
+#include "../../Animation.h"
 
 
-const uint8_t anim_blink_frame_0[] PROGMEM = {
+const uint8_t anim_normal_eyes_frame_0[] PROGMEM = {
     0x03, 0xFC, 0x00,
     0x0C, 0x03, 0x00,
     0x10, 0x00, 0x80,
@@ -50,7 +50,7 @@ const uint8_t anim_blink_frame_0[] PROGMEM = {
     0x03, 0xFC, 0x00,
 };
 
-const uint8_t anim_blink_frame_1[] PROGMEM = {
+const uint8_t anim_normal_eyes_frame_1[] PROGMEM = {
     0x00, 0x00, 0x00,
     0x00, 0x00, 0x00,
     0x00, 0x00, 0x00,
@@ -93,7 +93,7 @@ const uint8_t anim_blink_frame_1[] PROGMEM = {
     0x03, 0xFC, 0x00,
 };
 
-const uint8_t anim_blink_frame_2[] PROGMEM = {
+const uint8_t anim_normal_eyes_frame_2[] PROGMEM = {
     0x00, 0x00, 0x00,
     0x00, 0x00, 0x00,
     0x00, 0x00, 0x00,
@@ -136,7 +136,7 @@ const uint8_t anim_blink_frame_2[] PROGMEM = {
     0x03, 0xFC, 0x00,
 };
 
-const uint8_t anim_blink_frame_3[] PROGMEM = {
+const uint8_t anim_normal_eyes_frame_3[] PROGMEM = {
     0x00, 0x00, 0x00,
     0x00, 0x00, 0x00,
     0x00, 0x00, 0x00,
@@ -179,7 +179,7 @@ const uint8_t anim_blink_frame_3[] PROGMEM = {
     0x03, 0xFC, 0x00,
 };
 
-const uint8_t anim_blink_frame_4[] PROGMEM = {
+const uint8_t anim_normal_eyes_frame_4[] PROGMEM = {
     0x00, 0x00, 0x00,
     0x00, 0x00, 0x00,
     0x00, 0x00, 0x00,
@@ -222,7 +222,7 @@ const uint8_t anim_blink_frame_4[] PROGMEM = {
     0x03, 0xFC, 0x00,
 };
 
-const uint8_t anim_blink_frame_5[] PROGMEM = {
+const uint8_t anim_normal_eyes_frame_5[] PROGMEM = {
     0x00, 0x00, 0x00,
     0x00, 0x00, 0x00,
     0x00, 0x00, 0x00,
@@ -265,7 +265,7 @@ const uint8_t anim_blink_frame_5[] PROGMEM = {
     0x03, 0xFC, 0x00,
 };
 
-const uint8_t anim_blink_frame_6[] PROGMEM = {
+const uint8_t anim_normal_eyes_frame_6[] PROGMEM = {
     0x00, 0x00, 0x00,
     0x00, 0x00, 0x00,
     0x00, 0x00, 0x00,
@@ -308,7 +308,7 @@ const uint8_t anim_blink_frame_6[] PROGMEM = {
     0x03, 0xFC, 0x00,
 };
 
-const uint8_t anim_blink_frame_7[] PROGMEM = {
+const uint8_t anim_normal_eyes_frame_7[] PROGMEM = {
     0x00, 0x00, 0x00,
     0x00, 0x00, 0x00,
     0x00, 0x00, 0x00,
@@ -351,7 +351,7 @@ const uint8_t anim_blink_frame_7[] PROGMEM = {
     0x03, 0xFC, 0x00,
 };
 
-const uint8_t anim_blink_frame_8[] PROGMEM = {
+const uint8_t anim_normal_eyes_frame_8[] PROGMEM = {
     0x00, 0x00, 0x00,
     0x00, 0x00, 0x00,
     0x00, 0x00, 0x00,
@@ -394,7 +394,7 @@ const uint8_t anim_blink_frame_8[] PROGMEM = {
     0x03, 0xFC, 0x00,
 };
 
-const uint8_t anim_blink_frame_9[] PROGMEM = {
+const uint8_t anim_normal_eyes_frame_9[] PROGMEM = {
     0x03, 0xFC, 0x00,
     0x0C, 0x03, 0x00,
     0x10, 0x00, 0x80,
@@ -437,20 +437,20 @@ const uint8_t anim_blink_frame_9[] PROGMEM = {
     0x03, 0xFC, 0x00,
 };
 
-std::shared_ptr<Animation> animation_blink = std::make_shared<Animation>(
-	"blink",
+std::shared_ptr<Animation> animation_normal_eyes = std::make_shared<Animation>(
+	"normal_eyes",
 	20, 40,
 	std::vector<const uint8_t*>({
-	anim_blink_frame_0,
-	anim_blink_frame_1,
-	anim_blink_frame_2,
-	anim_blink_frame_3,
-	anim_blink_frame_4,
-	anim_blink_frame_5,
-	anim_blink_frame_6,
-	anim_blink_frame_7,
-	anim_blink_frame_8,
-	anim_blink_frame_9
+	anim_normal_eyes_frame_0,
+	anim_normal_eyes_frame_1,
+	anim_normal_eyes_frame_2,
+	anim_normal_eyes_frame_3,
+	anim_normal_eyes_frame_4,
+	anim_normal_eyes_frame_5,
+	anim_normal_eyes_frame_6,
+	anim_normal_eyes_frame_7,
+	anim_normal_eyes_frame_8,
+	anim_normal_eyes_frame_9
 	})
 );
 

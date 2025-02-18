@@ -9,8 +9,8 @@
 enum AnimationLoopType {
   StopAtLast,
   StopAtFirst,
-  Loop
-  // FrontBack
+  Loop,
+  Reverse
 };
 
 class Animation {
@@ -77,6 +77,18 @@ public:
           }
         } else if (_playing) {
           _currentFrame.increase();
+        }
+        break;
+      case AnimationLoopType::Reverse:
+        if (_currentFrame.isZero()) {
+          if (_loopDelay.isZero()) {
+            _currentFrame.setValue(_currentFrame.getMaxValue());
+            _loopDelay.setValue(_loopDelay.getMaxValue());
+          } else {
+            _loopDelay.decrease();
+          }
+        } else if (_playing) {
+          _currentFrame.decrease();
         }
         break;
     }

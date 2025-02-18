@@ -4,7 +4,7 @@
 #define ANIMATION_HEART_EYES
 #include <memory>
 #include <vector>
-#include "../Animation.h"
+#include "../../Animation.h"
 
 
 const uint8_t anim_heart_eyes_frame_0[] PROGMEM = {

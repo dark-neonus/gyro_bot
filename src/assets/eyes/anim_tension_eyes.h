@@ -1,13 +1,13 @@
-// C Array of tropes_x_eyes.gif
+// C Array of tension_eyes.gif
 #pragma once
-#ifndef ANIMATION_TROPES_X_EYES
-#define ANIMATION_TROPES_X_EYES
+#ifndef ANIMATION_TENSION_EYES
+#define ANIMATION_TENSION_EYES
 #include <memory>
 #include <vector>
-#include "../Animation.h"
+#include "../../Animation.h"
 
 
-const uint8_t anim_tropes_x_eyes_frame_0[] PROGMEM = {
+const uint8_t anim_tension_eyes_frame_0[] PROGMEM = {
     0x00, 0x00, 0x00,
     0x00, 0x00, 0x00,
     0x00, 0x00, 0x00,
@@ -50,11 +50,11 @@ const uint8_t anim_tropes_x_eyes_frame_0[] PROGMEM = {
     0x00, 0x00, 0x00,
 };
 
-std::shared_ptr<Animation> animation_tropes_x_eyes = std::make_shared<Animation>(
-	"tropes_x_eyes",
+std::shared_ptr<Animation> animation_tension_eyes = std::make_shared<Animation>(
+	"tension_eyes",
 	20, 40,
 	std::vector<const uint8_t*>({
-	anim_tropes_x_eyes_frame_0
+	anim_tension_eyes_frame_0
 	})
 );
 

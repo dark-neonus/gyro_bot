@@ -5,6 +5,12 @@ import pathlib
 from PIL import Image, ImageSequence
 import numpy as np
 
+import os
+import re
+
+EYES_DIR = "eyes"
+MOUTH_DIR = "mouth"
+OTHER_DIR = "other"
 
 def frame_to_c_array(frame: Image, width: int, height: int) -> list:
     """ Convert a frame to a byte-packed array for Adafruit OLEDs """
@@ -56,7 +62,7 @@ def frames_to_file(frames: list, width: int, height: int, filename: str):
         f"#define ANIMATION_{filename.upper()}\n"
         "#include <memory>\n"
         "#include <vector>\n"
-        "#include \"../Animation.h\"\n"
+        "#include \"../../Animation.h\"\n"
     )
 
     content1 = []
@@ -83,14 +89,29 @@ def frames_to_file(frames: list, width: int, height: int, filename: str):
 
     footer = "#endif"
 
-    with open(f"anim_{filename}.h", "w", encoding="utf-8") as file:
+    asset_dir = OTHER_DIR
+
+    if re.search(f"{EYES_DIR}", filename):
+        asset_dir = EYES_DIR
+    elif re.search(f"{MOUTH_DIR}", filename):
+        asset_dir = MOUTH_DIR
+
+
+    with open(os.path.join(asset_dir, f"anim_{filename}.h"), "w", encoding="utf-8") as file:
         file.write("\n\n".join([header] + content1 + [content2] + [footer]))
 
 
 
 def main() -> str:
     """ Main function """
-    # Pass
+
+    if not os.path.exists(EYES_DIR):
+        os.mkdir(EYES_DIR)
+    if not os.path.exists(MOUTH_DIR):
+        os.mkdir(MOUTH_DIR)
+    if not os.path.exists(OTHER_DIR):
+        os.mkdir(OTHER_DIR)
+
     parser = argparse.ArgumentParser(description="Process some integers.")
 
     parser.add_argument("--file",

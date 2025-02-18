@@ -10,10 +10,7 @@
 #include "configure.h"
 
 
-
-
 float dX_circle, dY_circle;
-
 
 
 Face face = Face(Vec2(0.0f, 0.0f));
@@ -38,7 +35,6 @@ void setup() {
   gyroSetup();
   eventsSetup();
 }
-
 
 
 void loop() {

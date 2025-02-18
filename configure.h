@@ -38,6 +38,11 @@ void configureMenuList() {
           Settings::bot_state = BotState::TENSION;
       }
     ));
+    manual_mode.addNode(std::make_shared<TreeNode>("dizzy",
+      [](std::shared_ptr<MenuTree> menuTree) {
+          Settings::bot_state = BotState::DIZZY;
+      }
+    ));
     manual_mode.addNode(std::make_shared<TreeNode>("hide UI", 
       [](std::shared_ptr<MenuTree> menuTree) {
           Settings::show_ui = false;
