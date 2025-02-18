@@ -1,4 +1,5 @@
 // C Array of blink.gif
+#pragma once
 #ifndef ANIMATION_BLINK
 #define ANIMATION_BLINK
 #include <memory>

@@ -3,6 +3,8 @@
 #include <memory>
 
 #include "src/MenuTree.h"
+#include "face.h"
+// #include "configure.h"
 
 MenuListObject menu_list = MenuListObject();
 
@@ -21,11 +23,29 @@ void configureMenuList() {
   TreeNode manual_mode = TreeNode("manual");
   {
     manual_mode.addNode(std::make_shared<TreeNode>("back", MenuTree::go_back));
-    manual_mode.addNode(std::make_shared<TreeNode>("face 1", MenuTree::do_nothing));
-    manual_mode.addNode(std::make_shared<TreeNode>("face 2", MenuTree::do_nothing));
-    manual_mode.addNode(std::make_shared<TreeNode>("face 3", MenuTree::do_nothing));
-    manual_mode.addNode(std::make_shared<TreeNode>("face 4", MenuTree::do_nothing));
-    manual_mode.addNode(std::make_shared<TreeNode>("face 5", MenuTree::do_nothing));
+    manual_mode.addNode(std::make_shared<TreeNode>("normal",
+      [](std::shared_ptr<MenuTree> menuTree) {
+          Settings::bot_state = BotState::NORMAL;
+      }
+    ));
+    manual_mode.addNode(std::make_shared<TreeNode>("love",
+    [](std::shared_ptr<MenuTree> menuTree) {
+        Settings::bot_state = BotState::LOVE;
+    }
+    ));
+    manual_mode.addNode(std::make_shared<TreeNode>("tension",
+      [](std::shared_ptr<MenuTree> menuTree) {
+          Settings::bot_state = BotState::TENSION;
+      }
+    ));
+    manual_mode.addNode(std::make_shared<TreeNode>("hide UI", 
+      [](std::shared_ptr<MenuTree> menuTree) {
+          Settings::show_ui = false;
+      })
+    );
+    // manual_mode.addNode(std::make_shared<TreeNode>("face 3", MenuTree::do_nothing));
+    // manual_mode.addNode(std::make_shared<TreeNode>("face 4", MenuTree::do_nothing));
+    // manual_mode.addNode(std::make_shared<TreeNode>("face 5", MenuTree::do_nothing));
   }
   TreeNode settings_mode = TreeNode("settings");
   {
@@ -39,7 +59,7 @@ void configureMenuList() {
   {
     test_mode.addNode(std::make_shared<TreeNode>("back", MenuTree::go_back));
   }
-  TreeNode sleep_mode = TreeNode("sleep", MenuTree::do_nothing);
+  TreeNode sleep_mode = TreeNode("sleep", enterDeepSleep);
 
 
   menu_list.menu->getRoot()->addNode(std::make_shared<TreeNode>(live_mode));

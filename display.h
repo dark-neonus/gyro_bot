@@ -5,6 +5,9 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
+#include "src/Settings.h"
+#include "src/MenuTree.h"
+
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
 
@@ -20,3 +23,11 @@ void displaySetup() {
 
   display.display();
 }
+
+const std::function<void(std::shared_ptr<MenuTree>)> enterDeepSleep = 
+[](std::shared_ptr<MenuTree>) {
+    display.clearDisplay();
+    display.display();
+    Settings::saveData();
+    esp_deep_sleep_start();
+};

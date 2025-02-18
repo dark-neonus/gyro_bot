@@ -43,9 +43,9 @@ void updateSensorData() {
     aY = gyroSensor.accelY();
     aZ = gyroSensor.accelZ();
     aSqrt = gyroSensor.accelSqrt();
-    Serial.println("accelX: " + String(aX));
-    Serial.println("accelY: " + String(aY));
-    Serial.println("accelZ: " + String(aZ));
+    // Serial.println("accelX: " + String(aX));
+    // Serial.println("accelY: " + String(aY));
+    // Serial.println("accelZ: " + String(aZ));
     // Serial.println("accelSqrt: " + String(aSqrt));
   } else {
     Serial.println("Cannod read accel values " + String(result));
@@ -56,15 +56,15 @@ void updateSensorData() {
     gX = gyroSensor.gyroX();
     gY = gyroSensor.gyroY();
     gZ = gyroSensor.gyroZ();
-    Serial.println("gyroX: " + String(gX));
-    Serial.println("gyroY: " + String(gY));
-    Serial.println("gyroZ: " + String(gZ));
+    // Serial.println("gyroX: " + String(gX));
+    // Serial.println("gyroY: " + String(gY));
+    // Serial.println("gyroZ: " + String(gZ));
   } else {
     Serial.println("Cannot read gyro values " + String(result));
   }
 
-  Serial.println("at " + String(millis()) + "ms");
-  Serial.println(""); // Add an empty line
+  // Serial.println("at " + String(millis()) + "ms");
+  // Serial.println(""); // Add an empty line
 
   angleX += gX * deltaTime;
   angleY += gY * deltaTime;

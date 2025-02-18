@@ -28,6 +28,8 @@ void setup() {
   while(!Serial);
   Serial.println("started");
 
+  Settings::loadData();
+
   configureMenuList();
 
   menu_list.menu->addPath(menu_list.menu->getRoot()->sub_nodes[0]);
@@ -49,7 +51,7 @@ void loop() {
   // display.drawCircle(display.width()/2 + dX_circle, display.height()/2 + dY_circle, 5, SSD1306_WHITE);
   face.draw(display,
     Vec2(SCREEN_WIDTH / 2 + (Settings::show_ui ? 20 : 0), SCREEN_HEIGHT / 2)
-    + Vec2(gX * deltaTime, gY * deltaTime) / 2
+    + Vec2(-gX * deltaTime, gY * deltaTime)
   );
   if (Settings::show_ui) {
     menu_list.draw(display, Vec2(0.0f, 0.0f));
@@ -59,7 +61,9 @@ void loop() {
 
   display.display();
 
-  delay(50);
+  face.update();
+
+  delay(10);
 }
 
 

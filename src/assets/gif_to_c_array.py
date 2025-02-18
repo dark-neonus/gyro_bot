@@ -51,6 +51,7 @@ def frames_to_file(frames: list, width: int, height: int, filename: str):
     """ Frames to file """
     header = (
         f"// C Array of {filename}.gif\n"
+        "#pragma once\n"
         f"#ifndef ANIMATION_{filename.upper()}\n"
         f"#define ANIMATION_{filename.upper()}\n"
         "#include <memory>\n"

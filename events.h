@@ -9,12 +9,20 @@
 
 #include "face.h"
 
+
 #define LEFT_BUTTON_PIN 25
 #define UP_BUTTON_PIN 33
 #define DOWN_BUTTON_PIN 32
 #define RIGHT_BUTTON_PIN 35
 
-#define BUTTON_REACTION_TRESHOLD 5
+#define WAKE_UP_PIN DOWN_BUTTON_PIN
+#define WAKE_UP_MODE INPUT_PULLDOWN
+#define WAKE_UP_SIGNAL HIGH
+
+#define BUTTON_MODE INPUT_PULLDOWN
+#define BUTTON_PRESSED_SIGNAL HIGH
+
+#define BUTTON_REACTION_TRESHOLD 7
 
 Counter left_button_counter = Counter(BUTTON_REACTION_TRESHOLD);
 Counter up_button_counter = Counter(BUTTON_REACTION_TRESHOLD);
@@ -23,38 +31,41 @@ Counter right_button_counter = Counter(BUTTON_REACTION_TRESHOLD);
 
 
 void eventsSetup() {
-  pinMode(LEFT_BUTTON_PIN, INPUT);
-  pinMode(UP_BUTTON_PIN, INPUT);
-  pinMode(DOWN_BUTTON_PIN, INPUT);
-  pinMode(RIGHT_BUTTON_PIN, INPUT);
+  pinMode(LEFT_BUTTON_PIN, BUTTON_MODE);
+  pinMode(UP_BUTTON_PIN, BUTTON_MODE);
+  // pinMode(DOWN_BUTTON_PIN, BUTTON_MODE);
+  pinMode(RIGHT_BUTTON_PIN, BUTTON_MODE);
+
+  pinMode(WAKE_UP_PIN, WAKE_UP_MODE);
+  esp_sleep_enable_ext0_wakeup((gpio_num_t)WAKE_UP_PIN, WAKE_UP_SIGNAL);  // Wake up when button pressed
 }
 
 void events_handler(std::shared_ptr<MenuTree> menu_list) {
   display.setTextColor(SSD1306_WHITE);
   display.setTextSize(1);
 
-  if (digitalRead(LEFT_BUTTON_PIN) == HIGH) {
+  if (digitalRead(LEFT_BUTTON_PIN) == BUTTON_PRESSED_SIGNAL) {
     left_button_counter.increase();
   }
   else {
     left_button_counter.decrease();
   }
     
-  if (digitalRead(UP_BUTTON_PIN) == HIGH) {
+  if (digitalRead(UP_BUTTON_PIN) == BUTTON_PRESSED_SIGNAL) {
     up_button_counter.increase();
   }
   else {
     up_button_counter.decrease();
   }
 
-  if (digitalRead(DOWN_BUTTON_PIN) == HIGH) {
+  if (digitalRead(DOWN_BUTTON_PIN) == WAKE_UP_SIGNAL) {
     down_button_counter.increase();
   }
   else {
     down_button_counter.decrease();
   }
 
-  if (digitalRead(RIGHT_BUTTON_PIN) == HIGH) {
+  if (digitalRead(RIGHT_BUTTON_PIN) == BUTTON_PRESSED_SIGNAL) {
     right_button_counter.increase();
   }
   else {
