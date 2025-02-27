@@ -17,10 +17,13 @@ public:
 
   static bool show_ui;
   static BotState bot_state;
+  static float face_sensitivity;
 
   static void saveData() {
     preferences.begin("storage", false);
     preferences.putBool("show_ui", Settings::show_ui);
+    preferences.putFloat("face_sensitivity", Settings::face_sensitivity);
+
 
     preferences.putInt("myInt", 42);
     preferences.putFloat("myFloat", 3.14);
@@ -31,6 +34,8 @@ public:
   static void loadData() {
     preferences.begin("storage", true);
     Settings::show_ui = preferences.getBool("show_ui", false);
+    Settings::face_sensitivity = preferences.getFloat("face_sensitivity", 2.0f);
+
 
     int myInt = preferences.getInt("myInt", 0);
     float myFloat = preferences.getFloat("myFloat", 0.0);

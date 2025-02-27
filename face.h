@@ -17,9 +17,38 @@
 #include "src/assets/eyes/anim_dizzy_eyes.h"
 
 #include "src/assets/mouth/anim_normal_mouth.h"
+#include "src/assets/mouth/anim_heart_mouth.h"
+#include "src/assets/mouth/anim_tension_mouth.h"
+#include "src/assets/mouth/anim_dizzy_mouth.h"
 
 
-// int tmp_bla = 10;
+class Mouth : public ImageObject {
+public:
+  Mouth(Vec2 pos_, Vec2 pivot_=Vec2(0.0f, 0.0f))
+  : ImageObject(pos_, pivot_)
+  {
+    addAnimation(std::make_shared<Animation>(*(animation_normal_mouth.get())));
+    addAnimation(std::make_shared<Animation>(*(animation_heart_mouth.get())));
+    addAnimation(std::make_shared<Animation>(*(animation_tension_mouth.get())));
+    addAnimation(std::make_shared<Animation>(*(animation_dizzy_mouth.get())));
+    
+    animations[animation_normal_mouth->name]->animationLoopType = AnimationLoopType::Loop;
+    animations[animation_heart_mouth->name]->animationLoopType = AnimationLoopType::Reverse;
+    animations[animation_tension_mouth->name]->animationLoopType = AnimationLoopType::Loop;
+    animations[animation_dizzy_mouth->name]->animationLoopType = AnimationLoopType::FrontBack;
+
+    animations[animation_dizzy_mouth->name]->setLoopDelay(4);
+
+
+    selectAnimation(animation_normal_mouth->name);
+    // tmp_bla += 7;
+  }
+
+  void draw(Adafruit_SSD1306& display, Vec2 dV) override {
+    Vec2 eyePos = getPos() + dV - Vec2(getCurrentW(), getCurrentH()) / 2;
+    display.drawBitmap(eyePos.x, eyePos.y, getCurrentFrame(), getCurrentW(), getCurrentH(), SSD1306_WHITE);
+  }
+};
 
 class Eye : public ImageObject {
 public:
@@ -36,7 +65,7 @@ public:
     
     animations[animation_heart_eyes->name]->animationLoopType = AnimationLoopType::Loop;
     
-    animations[animation_tension_eyes->name]->animationLoopType = AnimationLoopType::Loop;
+    animations[animation_tension_eyes->name]->animationLoopType = AnimationLoopType::StopAtFirst;
 
     animations[animation_dizzy_eyes->name]->animationLoopType = AnimationLoopType::Loop;
 
@@ -55,16 +84,16 @@ class Face : ScreenObject {
 public:
   Eye leftEye;
   Eye rightEye;
-
-  static constexpr int eyeWidth = 20;
-  static constexpr int eyeHeight = 40;
+  Mouth mouth;
 
   Face(Vec2 pos_)
   : ScreenObject(pos_),
     leftEye(Vec2(-20.0f, 0.0f)),
-    rightEye(Vec2(20.0f, 0.0f))
+    rightEye(Vec2(20.0f, 0.0f)),
+    mouth(Vec2(0.0f, 20.0f))
   {
     rightEye.animations[animation_dizzy_eyes->name]->animationLoopType = AnimationLoopType::Reverse;
+    rightEye.animations[animation_tension_eyes->name]->animationLoopType = AnimationLoopType::StopAtLast;
   }
 
   void select_state_animation() {
@@ -72,18 +101,22 @@ public:
     case BotState::NORMAL:
       leftEye.selectAnimation(animation_normal_eyes->name);  
       rightEye.selectAnimation(animation_normal_eyes->name);
+      mouth.selectAnimation(animation_normal_mouth->name);
       break;
     case BotState::LOVE:
       leftEye.selectAnimation(animation_heart_eyes->name);  
       rightEye.selectAnimation(animation_heart_eyes->name);
+      mouth.selectAnimation(animation_heart_mouth->name);
       break;
     case BotState::TENSION:
       leftEye.selectAnimation(animation_tension_eyes->name);  
       rightEye.selectAnimation(animation_tension_eyes->name);
+      mouth.selectAnimation(animation_tension_mouth->name);
       break;
     case BotState::DIZZY:
       leftEye.selectAnimation(animation_dizzy_eyes->name);  
       rightEye.selectAnimation(animation_dizzy_eyes->name);
+      mouth.selectAnimation(animation_dizzy_mouth->name);
       break;
     }
   }
@@ -92,11 +125,13 @@ public:
     select_state_animation();
     leftEye.update();
     rightEye.update();
+    mouth.update();
   }
 
   void draw(Adafruit_SSD1306& display, Vec2 dV) override {
     leftEye.draw(display, pos + dV);
     rightEye.draw(display, pos + dV);
+    mouth.draw(display, pos + dV);
   }
 };
 

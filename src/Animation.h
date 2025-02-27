@@ -10,7 +10,8 @@ enum AnimationLoopType {
   StopAtLast,
   StopAtFirst,
   Loop,
-  Reverse
+  Reverse,
+  FrontBack
 };
 
 class Animation {
@@ -18,6 +19,7 @@ private:
   Counter _currentFrame;
   Counter _loopDelay;
   bool _playing;
+  int animation_direction = 1;
 public:
   const int width;
   const int height;
@@ -89,6 +91,30 @@ public:
           }
         } else if (_playing) {
           _currentFrame.decrease();
+        }
+        break;
+      case AnimationLoopType::FrontBack:
+        if (_currentFrame.isZero()) {
+          if (_loopDelay.isZero()) {
+            _currentFrame.setValue(_currentFrame.getMaxValue());
+            _loopDelay.setValue(_loopDelay.getMaxValue());
+            animation_direction *= -1;
+          } else {
+            _loopDelay.decrease();
+          }
+        } else if (_currentFrame.isMax()) {
+          if (_playing) {
+            if (_loopDelay.isZero()) {
+              _currentFrame.setValue(0);
+              _loopDelay.setValue(_loopDelay.getMaxValue());
+              animation_direction *= -1;
+            } else {
+              _loopDelay.decrease();
+            }
+          }
+          
+        } else if (_playing) {
+          _currentFrame.add(animation_direction);
         }
         break;
     }
