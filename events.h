@@ -22,7 +22,7 @@
 #define DOWN_BUTTON_PIN 6
 #define RIGHT_BUTTON_PIN 5
 
-#define WAKE_UP_PIN DOWN_BUTTON_PIN
+#define WAKE_UP_PIN UP_BUTTON_PIN
 #define WAKE_UP_MODE INPUT_PULLDOWN
 #define WAKE_UP_SIGNAL HIGH
 
@@ -40,7 +40,7 @@ Counter right_button_counter = Counter(BUTTON_REACTION_TRESHOLD);
 void eventsSetup() {
   pinMode(LEFT_BUTTON_PIN, BUTTON_MODE);
   pinMode(UP_BUTTON_PIN, BUTTON_MODE);
-  // pinMode(DOWN_BUTTON_PIN, BUTTON_MODE);
+  pinMode(DOWN_BUTTON_PIN, BUTTON_MODE);
   pinMode(RIGHT_BUTTON_PIN, BUTTON_MODE);
 
   pinMode(WAKE_UP_PIN, WAKE_UP_MODE);

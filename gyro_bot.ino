@@ -58,7 +58,7 @@ void loop() {
   if ((Settings::live_mode) &&
     (Settings::bot_state == BotState::TIRED1 || Settings::bot_state == BotState::TIRED2) &&
     (accelMagnitude < 0.5 || accelMagnitude > 1.5 ||
-      abs(gX) + abs(gY) + abs(gZ) > 140)) {
+      abs(gX) + abs(gY) + abs(gZ) > 180)) {
     inactiveCounter.setValue(0);
     Settings::bot_state = BotState::NORMAL;
   }

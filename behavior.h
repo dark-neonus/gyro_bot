@@ -22,7 +22,7 @@ Counter inactiveCounter = Counter(SLEEP_TIME);
 
 Counter shakeTriggerCouner = Counter(SHAKE_TRESHOLD);
 
-#define TENSION_TIME 15
+#define TENSION_TIME 17
 #define DIZZY_TIME 60
 
 Counter tensionCounter = Counter(TENSION_TIME);
