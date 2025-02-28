@@ -6,12 +6,13 @@
 #include <MPU9250_asukiaaa.h>
 
 #ifdef _ESP32_HAL_I2C_H_
-#define SDA_PIN 21
-#define SCL_PIN 22
+#define SDA_PIN 8
+#define SCL_PIN 9
 #endif
 
 MPU9250_asukiaaa gyroSensor;
 float aX, aY, aZ, aSqrt, gX, gY, gZ, mDirection, mX, mY, mZ;
+float accelMagnitude = 1.0f;
 
 float angleX = 0, angleY = 0, angleZ = 0;
 unsigned long lastTime = 0;
@@ -43,6 +44,7 @@ void updateSensorData() {
     aY = gyroSensor.accelY();
     aZ = gyroSensor.accelZ();
     aSqrt = gyroSensor.accelSqrt();
+    accelMagnitude = sqrt(aX * aX + aY * aY + aZ * aZ);
     // Serial.println("accelX: " + String(aX));
     // Serial.println("accelY: " + String(aY));
     // Serial.println("accelZ: " + String(aZ));

@@ -6,14 +6,21 @@
 #include "src/Counter.h"
 #include "src/MenuTree.h"
 #include "src/Settings.h"
+#include "behavior.h"
 
 #include "face.h"
 
+// ### Correct configure ###
+// #define LEFT_BUTTON_PIN 5
+// #define UP_BUTTON_PIN 6
+// #define DOWN_BUTTON_PIN 4
+// #define RIGHT_BUTTON_PIN 7
 
-#define LEFT_BUTTON_PIN 25
-#define UP_BUTTON_PIN 33
-#define DOWN_BUTTON_PIN 32
-#define RIGHT_BUTTON_PIN 35
+// ### Incorrect solution for short time ###
+#define LEFT_BUTTON_PIN 7
+#define UP_BUTTON_PIN 4
+#define DOWN_BUTTON_PIN 6
+#define RIGHT_BUTTON_PIN 5
 
 #define WAKE_UP_PIN DOWN_BUTTON_PIN
 #define WAKE_UP_MODE INPUT_PULLDOWN
@@ -22,7 +29,7 @@
 #define BUTTON_MODE INPUT_PULLDOWN
 #define BUTTON_PRESSED_SIGNAL HIGH
 
-#define BUTTON_REACTION_TRESHOLD 7
+#define BUTTON_REACTION_TRESHOLD 6
 
 Counter left_button_counter = Counter(BUTTON_REACTION_TRESHOLD);
 Counter up_button_counter = Counter(BUTTON_REACTION_TRESHOLD);
@@ -74,6 +81,7 @@ void events_handler(std::shared_ptr<MenuTree> menu_list) {
 
   
   if (left_button_counter.isMax()) {
+    inactiveCounter.setValue(0);
     display.setCursor(SCREEN_WIDTH - 4 * 7, 5);
     display.print("L");
     if (Settings::show_ui) {
@@ -85,6 +93,7 @@ void events_handler(std::shared_ptr<MenuTree> menu_list) {
     left_button_counter.setValue(0);
   }
   if (up_button_counter.isMax()) {
+    inactiveCounter.setValue(0);
     display.setCursor(SCREEN_WIDTH - 3 * 7, 5);
     display.print("U");
     if (Settings::show_ui) {
@@ -96,6 +105,7 @@ void events_handler(std::shared_ptr<MenuTree> menu_list) {
     up_button_counter.setValue(0);
   }
   if (down_button_counter.isMax()) {
+    inactiveCounter.setValue(0);
     display.setCursor(SCREEN_WIDTH - 2 * 7, 5);
     display.print("D");
     if (Settings::show_ui) {
@@ -107,6 +117,7 @@ void events_handler(std::shared_ptr<MenuTree> menu_list) {
     down_button_counter.setValue(0);
   }
   if (right_button_counter.isMax()) {
+    inactiveCounter.setValue(0);
     display.setCursor(SCREEN_WIDTH - 1 * 7, 5);
     display.print("R");
     if (Settings::show_ui) {

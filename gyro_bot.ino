@@ -1,4 +1,5 @@
 
+
 #include "src/Vec2.h"
 #include "src/Counter.h"
 #include "src/Settings.h"
@@ -8,6 +9,7 @@
 #include "gyroscope.h"
 #include "events.h"
 #include "configure.h"
+#include "behavior.h"
 
 
 float dX_circle, dY_circle;
@@ -45,9 +47,27 @@ void loop() {
 
   display.clearDisplay(); // Clear display buffer
   // display.drawCircle(display.width()/2 + dX_circle, display.height()/2 + dY_circle, 5, SSD1306_WHITE);
+
+  if (accelMagnitude < BOTTOM_ACCELERATION_TRIGER || accelMagnitude > TOP_ACCELERATION_TRIGER) {
+    shakeTriggerCouner.increase();
+  }
+  else {
+    shakeTriggerCouner.decrease();
+  }
+
+  if ((Settings::live_mode) &&
+    (Settings::bot_state == BotState::TIRED1 || Settings::bot_state == BotState::TIRED2) &&
+    (accelMagnitude < 0.5 || accelMagnitude > 1.5 ||
+      abs(gX) + abs(gY) + abs(gZ) > 140)) {
+    inactiveCounter.setValue(0);
+    Settings::bot_state = BotState::NORMAL;
+  }
+  
+  update_behavior(menu_list.menu);
+
   face.draw(display,
     Vec2(SCREEN_WIDTH / 2 + (Settings::show_ui ? 26 : 0), SCREEN_HEIGHT / 2)
-    + Vec2(-gX * deltaTime, gY * deltaTime) * Settings::face_sensitivity
+    + Vec2(-gZ * deltaTime, gX * deltaTime) * Settings::face_sensitivity
   );
   if (Settings::show_ui) {
     menu_list.draw(display, Vec2(0.0f, 0.0f));

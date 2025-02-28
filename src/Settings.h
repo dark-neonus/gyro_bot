@@ -16,6 +16,7 @@ public:
   static Preferences preferences;
 
   static bool show_ui;
+  static bool live_mode;
   static BotState bot_state;
   static float face_sensitivity;
 
@@ -34,7 +35,7 @@ public:
   static void loadData() {
     preferences.begin("storage", true);
     Settings::show_ui = preferences.getBool("show_ui", false);
-    Settings::face_sensitivity = preferences.getFloat("face_sensitivity", 2.0f);
+    Settings::face_sensitivity = preferences.getFloat("face_sensitivity", 1.75f);
 
 
     int myInt = preferences.getInt("myInt", 0);

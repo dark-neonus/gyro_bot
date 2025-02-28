@@ -80,6 +80,10 @@ public:
     }
   }
 
+  std::string getDirectoryName() {
+    return getCurrentNode()->getText();
+  }
+
   std::shared_ptr<TreeNode> getCurrentNode() {
     return _path.top();
   }
