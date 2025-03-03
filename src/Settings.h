@@ -8,7 +8,9 @@ enum BotState {
   TENSION,
   DIZZY,
   TIRED1,
-  TIRED2
+  TIRED2,
+  DEAD,
+  HAPPY
 };
 
 class Settings {

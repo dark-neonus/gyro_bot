@@ -53,6 +53,16 @@ void configureMenuList() {
           Settings::bot_state = BotState::TIRED2;
       }
     ));
+    manual_mode.addNode(std::make_shared<TreeNode>("dead",
+      [](std::shared_ptr<MenuTree> menuTree) {
+          Settings::bot_state = BotState::DEAD;
+      }
+    ));
+    manual_mode.addNode(std::make_shared<TreeNode>("happy",
+      [](std::shared_ptr<MenuTree> menuTree) {
+          Settings::bot_state = BotState::HAPPY;
+      }
+    ));
     manual_mode.addNode(std::make_shared<TreeNode>("hide UI", 
       [](std::shared_ptr<MenuTree> menuTree) {
           Settings::show_ui = false;

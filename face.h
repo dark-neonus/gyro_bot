@@ -17,12 +17,17 @@
 #include "src/assets/eyes/anim_tired_1_eyes.h"
 #include "src/assets/eyes/anim_tired_2_eyes.h"
 #include "src/assets/eyes/anim_dizzy_eyes.h"
+#include "src/assets/eyes/anim_dead_eyes.h"
+#include "src/assets/eyes/anim_happy_eyes.h"
 
 #include "src/assets/mouth/anim_normal_mouth.h"
 #include "src/assets/mouth/anim_heart_mouth.h"
 #include "src/assets/mouth/anim_tension_mouth.h"
 #include "src/assets/mouth/anim_dizzy_mouth.h"
 #include "src/assets/mouth/anim_tired_mouth.h"
+#include "src/assets/mouth/anim_dead_mouth.h"
+#include "src/assets/mouth/anim_happy_mouth.h"
+
 
 
 class Mouth : public ImageObject {
@@ -35,12 +40,16 @@ public:
     addAnimation(std::make_shared<Animation>(*(animation_tension_mouth.get())));
     addAnimation(std::make_shared<Animation>(*(animation_tired_mouth.get())));
     addAnimation(std::make_shared<Animation>(*(animation_dizzy_mouth.get())));
+    addAnimation(std::make_shared<Animation>(*(animation_dead_mouth.get())));
+    addAnimation(std::make_shared<Animation>(*(animation_happy_mouth.get())));
     
     animations[animation_normal_mouth->name]->animationLoopType = AnimationLoopType::Loop;
     animations[animation_heart_mouth->name]->animationLoopType = AnimationLoopType::Reverse;
     animations[animation_tension_mouth->name]->animationLoopType = AnimationLoopType::Loop;
     animations[animation_tired_mouth->name]->animationLoopType = AnimationLoopType::StopAtFirst;
     animations[animation_dizzy_mouth->name]->animationLoopType = AnimationLoopType::FrontBack;
+    animations[animation_dead_mouth->name]->animationLoopType = AnimationLoopType::StopAtFirst;
+    animations[animation_happy_mouth->name]->animationLoopType = AnimationLoopType::StopAtFirst;
 
     animations[animation_dizzy_mouth->name]->setLoopDelay(4);
 
@@ -66,6 +75,8 @@ public:
     addAnimation(std::make_shared<Animation>(*(animation_tired_1_eyes.get())));
     addAnimation(std::make_shared<Animation>(*(animation_tired_2_eyes.get())));
     addAnimation(std::make_shared<Animation>(*(animation_dizzy_eyes.get())));
+    addAnimation(std::make_shared<Animation>(*(animation_dead_eyes.get())));
+    addAnimation(std::make_shared<Animation>(*(animation_happy_eyes.get())));
     
     animations[animation_normal_eyes->name]->animationLoopType = AnimationLoopType::Loop;
     animations[animation_normal_eyes->name]->setLoopDelay(40);
@@ -81,6 +92,9 @@ public:
     animations[animation_tired_2_eyes->name]->setLoopDelay(40);
 
     animations[animation_dizzy_eyes->name]->animationLoopType = AnimationLoopType::Loop;
+
+    animations[animation_dead_eyes->name]->animationLoopType = AnimationLoopType::StopAtFirst;
+    animations[animation_happy_eyes->name]->animationLoopType = AnimationLoopType::StopAtFirst;
 
     selectAnimation(animation_normal_eyes->name);
     // tmp_bla += 7;
@@ -140,6 +154,16 @@ public:
       leftEye.selectAnimation(animation_dizzy_eyes->name);  
       rightEye.selectAnimation(animation_dizzy_eyes->name);
       mouth.selectAnimation(animation_dizzy_mouth->name);
+      break;
+    case BotState::DEAD:
+      leftEye.selectAnimation(animation_dead_eyes->name);  
+      rightEye.selectAnimation(animation_dead_eyes->name);
+      mouth.selectAnimation(animation_dead_mouth->name);
+      break;
+    case BotState::HAPPY:
+      leftEye.selectAnimation(animation_happy_eyes->name);  
+      rightEye.selectAnimation(animation_happy_eyes->name);
+      mouth.selectAnimation(animation_happy_mouth->name);
       break;
     }
   }
