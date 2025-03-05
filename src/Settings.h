@@ -6,11 +6,13 @@ enum BotState {
   NORMAL,
   LOVE,
   TENSION,
-  DIZZY,
+  DIZZY1,
+  DIZZY2,
   TIRED1,
   TIRED2,
   DEAD,
-  HAPPY
+  HAPPY,
+  MEDITATION
 };
 
 class Settings {

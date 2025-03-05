@@ -38,9 +38,14 @@ void configureMenuList() {
           Settings::bot_state = BotState::TENSION;
       }
     ));
-    manual_mode.addNode(std::make_shared<TreeNode>("dizzy",
+    manual_mode.addNode(std::make_shared<TreeNode>("dizzy1",
       [](std::shared_ptr<MenuTree> menuTree) {
-          Settings::bot_state = BotState::DIZZY;
+          Settings::bot_state = BotState::DIZZY1;
+      }
+    ));
+    manual_mode.addNode(std::make_shared<TreeNode>("dizzy2",
+      [](std::shared_ptr<MenuTree> menuTree) {
+          Settings::bot_state = BotState::DIZZY2;
       }
     ));
     manual_mode.addNode(std::make_shared<TreeNode>("tired1",
@@ -61,6 +66,11 @@ void configureMenuList() {
     manual_mode.addNode(std::make_shared<TreeNode>("happy",
       [](std::shared_ptr<MenuTree> menuTree) {
           Settings::bot_state = BotState::HAPPY;
+      }
+    ));
+    manual_mode.addNode(std::make_shared<TreeNode>("meditation",
+      [](std::shared_ptr<MenuTree> menuTree) {
+          Settings::bot_state = BotState::MEDITATION;
       }
     ));
     manual_mode.addNode(std::make_shared<TreeNode>("hide UI", 

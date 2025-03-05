@@ -17,8 +17,10 @@
 #include "src/assets/eyes/anim_tired_1_eyes.h"
 #include "src/assets/eyes/anim_tired_2_eyes.h"
 #include "src/assets/eyes/anim_dizzy_eyes.h"
+#include "src/assets/eyes/anim_spinning_eyes.h"
 #include "src/assets/eyes/anim_dead_eyes.h"
 #include "src/assets/eyes/anim_happy_eyes.h"
+#include "src/assets/eyes/anim_meditation_eyes.h"
 
 #include "src/assets/mouth/anim_normal_mouth.h"
 #include "src/assets/mouth/anim_heart_mouth.h"
@@ -57,11 +59,6 @@ public:
     selectAnimation(animation_normal_mouth->name);
     // tmp_bla += 7;
   }
-
-  void draw(Adafruit_SSD1306& display, Vec2 dV) override {
-    Vec2 eyePos = getPos() + dV - Vec2(getCurrentW(), getCurrentH()) / 2;
-    display.drawBitmap(eyePos.x, eyePos.y, getCurrentFrame(), getCurrentW(), getCurrentH(), SSD1306_WHITE);
-  }
 };
 
 class Eye : public ImageObject {
@@ -75,8 +72,10 @@ public:
     addAnimation(std::make_shared<Animation>(*(animation_tired_1_eyes.get())));
     addAnimation(std::make_shared<Animation>(*(animation_tired_2_eyes.get())));
     addAnimation(std::make_shared<Animation>(*(animation_dizzy_eyes.get())));
+    addAnimation(std::make_shared<Animation>(*(animation_spinning_eyes.get())));
     addAnimation(std::make_shared<Animation>(*(animation_dead_eyes.get())));
     addAnimation(std::make_shared<Animation>(*(animation_happy_eyes.get())));
+    addAnimation(std::make_shared<Animation>(*(animation_meditation_eyes.get())));
     
     animations[animation_normal_eyes->name]->animationLoopType = AnimationLoopType::Loop;
     animations[animation_normal_eyes->name]->setLoopDelay(40);
@@ -92,17 +91,16 @@ public:
     animations[animation_tired_2_eyes->name]->setLoopDelay(40);
 
     animations[animation_dizzy_eyes->name]->animationLoopType = AnimationLoopType::Loop;
+    animations[animation_spinning_eyes->name]->animationLoopType = AnimationLoopType::Loop;
 
     animations[animation_dead_eyes->name]->animationLoopType = AnimationLoopType::StopAtFirst;
-    animations[animation_happy_eyes->name]->animationLoopType = AnimationLoopType::StopAtFirst;
+    animations[animation_happy_eyes->name]->animationLoopType = AnimationLoopType::FrontBack;
+    animations[animation_happy_eyes->name]->setLoopDelay(40);
+
+    animations[animation_meditation_eyes->name]->animationLoopType = AnimationLoopType::FrontBack;
 
     selectAnimation(animation_normal_eyes->name);
     // tmp_bla += 7;
-  }
-
-  void draw(Adafruit_SSD1306& display, Vec2 dV) override {
-    Vec2 eyePos = getPos() + dV - Vec2(getCurrentW(), getCurrentH()) / 2;
-    display.drawBitmap(eyePos.x, eyePos.y, getCurrentFrame(), getCurrentW(), getCurrentH(), SSD1306_WHITE);
   }
 };
 
@@ -121,9 +119,15 @@ public:
   {
     rightEye.animations[animation_dizzy_eyes->name]->animationLoopType = AnimationLoopType::Reverse;
     rightEye.animations[animation_tension_eyes->name]->animationLoopType = AnimationLoopType::StopAtLast;
+    rightEye.animations[animation_meditation_eyes->name]->setFrameIndex(
+      rightEye.animations[animation_meditation_eyes->name]->getNumberOfFrames() - 1
+    );
   }
 
   void select_state_animation() {
+    leftEye.enable();
+    rightEye.enable();
+    mouth.enable();
     switch (Settings::bot_state) {
     case BotState::NORMAL:
       leftEye.selectAnimation(animation_normal_eyes->name);  
@@ -150,9 +154,14 @@ public:
       rightEye.selectAnimation(animation_tired_2_eyes->name);
       mouth.selectAnimation(animation_tired_mouth->name);
       break;
-    case BotState::DIZZY:
+    case BotState::DIZZY1:
       leftEye.selectAnimation(animation_dizzy_eyes->name);  
       rightEye.selectAnimation(animation_dizzy_eyes->name);
+      mouth.selectAnimation(animation_dizzy_mouth->name);
+      break;
+    case BotState::DIZZY2:
+      leftEye.selectAnimation(animation_spinning_eyes->name);  
+      rightEye.selectAnimation(animation_spinning_eyes->name);
       mouth.selectAnimation(animation_dizzy_mouth->name);
       break;
     case BotState::DEAD:
@@ -164,6 +173,11 @@ public:
       leftEye.selectAnimation(animation_happy_eyes->name);  
       rightEye.selectAnimation(animation_happy_eyes->name);
       mouth.selectAnimation(animation_happy_mouth->name);
+      break;
+    case BotState::MEDITATION:
+      leftEye.selectAnimation(animation_meditation_eyes->name);  
+      rightEye.selectAnimation(animation_meditation_eyes->name);
+      mouth.disable();
       break;
     }
   }

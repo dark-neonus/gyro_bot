@@ -94,20 +94,20 @@ public:
         }
         break;
       case AnimationLoopType::FrontBack:
-        if (_currentFrame.isZero()) {
+        if (_currentFrame.isZero() && animation_direction == -1) {
           if (_loopDelay.isZero()) {
-            _currentFrame.setValue(_currentFrame.getMaxValue());
+            // _currentFrame.setValue(_currentFrame.getMaxValue());
             _loopDelay.setValue(_loopDelay.getMaxValue());
-            animation_direction *= -1;
+            animation_direction = 1;
           } else {
             _loopDelay.decrease();
           }
-        } else if (_currentFrame.isMax()) {
+        } else if (_currentFrame.isMax() && animation_direction == 1) {
           if (_playing) {
             if (_loopDelay.isZero()) {
-              _currentFrame.setValue(0);
+              // _currentFrame.setValue(0);
               _loopDelay.setValue(_loopDelay.getMaxValue());
-              animation_direction *= -1;
+              animation_direction = -1;
             } else {
               _loopDelay.decrease();
             }
@@ -122,6 +122,10 @@ public:
 
   const uint8_t* getCurrentFrame() {
     return frames[_currentFrame.getValue()];
+  }
+
+  void setFrameIndex(int index) {
+    _currentFrame.setValue(index);
   }
 
   void setLoopDelay(int value) {

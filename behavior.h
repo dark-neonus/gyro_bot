@@ -23,10 +23,10 @@ Counter inactiveCounter = Counter(SLEEP_TIME);
 Counter shakeTriggerCouner = Counter(SHAKE_TRESHOLD);
 
 #define TENSION_TIME 17
-#define DIZZY_TIME 60
+#define DIZZY1_TIME 60
 
 Counter tensionCounter = Counter(TENSION_TIME);
-Counter dizzyCounter = Counter(DIZZY_TIME);
+Counter DIZZY1Counter = Counter(DIZZY1_TIME);
 
 void update_behavior(std::shared_ptr<MenuTree> menu) {
   Settings::live_mode = true;
@@ -49,16 +49,16 @@ void update_behavior(std::shared_ptr<MenuTree> menu) {
 
       if (tensionCounter.isMax()) {
         tensionCounter.setValue(0);
-        Settings::bot_state = BotState::DIZZY;
-        dizzyCounter.setValue(0);
+        Settings::bot_state = BotState::DIZZY1;
+        DIZZY1Counter.setValue(0);
       }
     }
 
-    if (Settings::bot_state == BotState::DIZZY) {
-      dizzyCounter.increase();
+    if (Settings::bot_state == BotState::DIZZY1) {
+      DIZZY1Counter.increase();
 
-      if (dizzyCounter.isMax()) {
-        dizzyCounter.setValue(0);
+      if (DIZZY1Counter.isMax()) {
+        DIZZY1Counter.setValue(0);
         Settings::bot_state = BotState::NORMAL;
       }
     }
