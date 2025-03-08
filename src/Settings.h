@@ -15,28 +15,15 @@ enum BotState {
   MEDITATION
 };
 
-class Settings {
-public:
-  static Preferences preferences;
+namespace Settings {
+  extern Preferences preferences;
 
-  static bool show_ui;
-  static bool live_mode;
-  static BotState bot_state;
-  static float face_sensitivity;
+  extern bool show_ui;
+  extern bool live_mode;
+  extern BotState bot_state;
+  extern float face_sensitivity;
 
-  static void saveData() {
-    preferences.begin("storage", false);
-    preferences.putBool("show_ui", Settings::show_ui);
-    preferences.putFloat("face_sensitivity", Settings::face_sensitivity);
+  void saveData();
 
-    preferences.end();
-  }
-
-  static void loadData() {
-    preferences.begin("storage", true);
-    Settings::show_ui = preferences.getBool("show_ui", false);
-    Settings::face_sensitivity = preferences.getFloat("face_sensitivity", 1.8f);
-
-    preferences.end();
-  }
+  void loadData();
 };

@@ -18,6 +18,12 @@ float dX_circle, dY_circle;
 Face face = Face(Vec2(0.0f, 0.0f));
 
 // TreeNode default_menu = TreeNode;
+// Preferences Settings::preferences;
+
+// bool Settings::show_ui = false;
+// BotState Settings::bot_state = BotState::NORMAL;
+// float Settings::face_sensitivity = 1.0f;
+// bool Settings::live_mode = false;
 
 
 // Counter button_threshold = Counter(4, 0);
