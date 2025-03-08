@@ -3,10 +3,14 @@
 #include <memory>
 
 #include "src/MenuTree.h"
+#include "src/Vec2.h"
 #include "face.h"
 // #include "configure.h"
 
+#include "src/console/console.h"
+
 MenuListObject menu_list = MenuListObject();
+Console console = Console(Vec2(0.0f, 0.0f));
 
 #define MANUAL_DIR_NAME "manual"
 

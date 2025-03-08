@@ -11,18 +11,18 @@
 #include "face.h"
 
 // ### Correct configure ###
-// #define LEFT_BUTTON_PIN 5
-// #define UP_BUTTON_PIN 6
-// #define DOWN_BUTTON_PIN 4
-// #define RIGHT_BUTTON_PIN 7
+#define LEFT_BUTTON_PIN 5
+#define UP_BUTTON_PIN 6
+#define DOWN_BUTTON_PIN 4
+#define RIGHT_BUTTON_PIN 7
 
 // ### Incorrect solution for short time ###
-#define LEFT_BUTTON_PIN 7
-#define UP_BUTTON_PIN 4
-#define DOWN_BUTTON_PIN 6
-#define RIGHT_BUTTON_PIN 5
+// #define LEFT_BUTTON_PIN 7
+// #define UP_BUTTON_PIN 4
+// #define DOWN_BUTTON_PIN 6
+// #define RIGHT_BUTTON_PIN 5
 
-#define WAKE_UP_PIN UP_BUTTON_PIN
+#define WAKE_UP_PIN DOWN_BUTTON_PIN
 #define WAKE_UP_MODE INPUT_PULLDOWN
 #define WAKE_UP_SIGNAL HIGH
 
@@ -38,6 +38,12 @@ Counter right_button_counter = Counter(BUTTON_REACTION_TRESHOLD);
 
 
 void eventsSetup() {
+// ### Incorrect solution for short time ###
+// #define LEFT_BUTTON_PIN 7
+// #define UP_BUTTON_PIN 4
+// #define DOWN_BUTTON_PIN 6
+// #define RIGHT_BUTTON_PIN 5
+
   pinMode(LEFT_BUTTON_PIN, BUTTON_MODE);
   pinMode(UP_BUTTON_PIN, BUTTON_MODE);
   pinMode(DOWN_BUTTON_PIN, BUTTON_MODE);

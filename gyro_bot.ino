@@ -3,8 +3,8 @@
 #include "src/Vec2.h"
 #include "src/Counter.h"
 #include "src/Settings.h"
-#include "face.h"
 
+#include "face.h"
 #include "display.h"
 #include "gyroscope.h"
 #include "events.h"
