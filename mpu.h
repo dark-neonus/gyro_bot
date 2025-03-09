@@ -10,27 +10,42 @@
 #define SCL_PIN 9
 #endif
 
-MPU9250_asukiaaa gyroSensor;
-float aX, aY, aZ, aSqrt, gX, gY, gZ, mDirection, mX, mY, mZ;
+namespace mpu {
+float aX;
+float aY;
+float aZ;
 float accelMagnitude = 1.0f;
+float gX;
+float gY;
+float gZ;
+float mDirection;
+float mX;
+float mY;
+float mZ;
 
-float angleX = 0, angleY = 0, angleZ = 0;
+}
+
+MPU9250_asukiaaa mpuSensor;
+// float aX, aY, aZ, aSqrt, gX, gY, gZ, mDirection, mX, mY, mZ;
+// float accelMagnitude = 1.0f;
+
+// float angleX = 0, angleY = 0, angleZ = 0;
 unsigned long lastTime = 0;
 
-void gyroSetup() {
+void mpuSetup() {
   #ifdef _ESP32_HAL_I2C_H_ // For ESP32
     Wire.begin(SDA_PIN, SCL_PIN);
-    gyroSensor.setWire(&Wire);
+    mpuSensor.setWire(&Wire);
   #endif
 
-  gyroSensor.beginAccel();
-  gyroSensor.beginGyro();
-  gyroSensor.beginMag();
+  mpuSensor.beginAccel();
+  mpuSensor.beginGyro();
+  mpuSensor.beginMag();
 }
 
 float deltaTime = 0.0f;
 
-void updateSensorData() {
+void updateMPUData() {
   int result;
 
   unsigned long currentTime = millis(); 
@@ -38,13 +53,13 @@ void updateSensorData() {
   lastTime = currentTime;
 
 
-  result = gyroSensor.accelUpdate();
+  result = mpuSensor.accelUpdate();
   if (result == 0) {
-    aX = gyroSensor.accelX();
-    aY = gyroSensor.accelY();
-    aZ = gyroSensor.accelZ();
-    aSqrt = gyroSensor.accelSqrt();
-    accelMagnitude = sqrt(aX * aX + aY * aY + aZ * aZ);
+    mpu::aX = mpuSensor.accelX();
+    mpu::aY = mpuSensor.accelY();
+    mpu::aZ = mpuSensor.accelZ();
+    // aSqrt = mpuSensor.accelSqrt();
+    mpu::accelMagnitude = mpuSensor.accelSqrt();
     // Serial.println("accelX: " + String(aX));
     // Serial.println("accelY: " + String(aY));
     // Serial.println("accelZ: " + String(aZ));
@@ -53,11 +68,11 @@ void updateSensorData() {
     Serial.println("Cannod read accel values " + String(result));
   }
 
-  result = gyroSensor.gyroUpdate();
+  result = mpuSensor.gyroUpdate();
   if (result == 0) {
-    gX = gyroSensor.gyroX();
-    gY = gyroSensor.gyroY();
-    gZ = gyroSensor.gyroZ();
+    mpu::gX = mpuSensor.gyroX();
+    mpu::gY = mpuSensor.gyroY();
+    mpu::gZ = mpuSensor.gyroZ();
     // Serial.println("gyroX: " + String(gX));
     // Serial.println("gyroY: " + String(gY));
     // Serial.println("gyroZ: " + String(gZ));
@@ -68,9 +83,9 @@ void updateSensorData() {
   // Serial.println("at " + String(millis()) + "ms");
   // Serial.println(""); // Add an empty line
 
-  angleX += gX * deltaTime;
-  angleY += gY * deltaTime;
-  angleZ += gZ * deltaTime;
+  // angleX += mpu::gX * deltaTime;
+  // angleY += mpu::gY * deltaTime;
+  // angleZ += mpu::gZ * deltaTime;
 }
 
 

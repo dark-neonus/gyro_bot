@@ -19,7 +19,7 @@ public:
 
   void draw(Adafruit_SSD1306& display, Vec2 dV, std::vector<std::string> content) {
     for (int y = 0; y < content.size(); y++) {
-      display.setCursor(pos.x + left_padding, pos.y + y * (char_height + 1));
+      display.setCursor(pos.x + left_padding + dV.x, pos.y + y * (char_height + 1) + dV.y);
       display.print(content[y].c_str());
     }
   }

@@ -10,12 +10,15 @@
 #include "src/console/console.h"
 
 MenuListObject menu_list = MenuListObject();
-Console console = Console(Vec2(0.0f, 0.0f));
 
+#define LIVE_DIR_NAME "live"
 #define MANUAL_DIR_NAME "manual"
+#define MPU_DATA_DIR_NAME "mpu_data"
+#define NAVIGATION_DIR_NAME "navigation"
+#define SLEEP_DIR_NAME "sleep"
 
 void configureMenuList() {
-  TreeNode live_mode = TreeNode("live");
+  TreeNode live_mode = TreeNode(LIVE_DIR_NAME);
   {
     live_mode.addNode(std::make_shared<TreeNode>("menu", MenuTree::go_back));
     live_mode.addNode(std::make_shared<TreeNode>("hide UI", 
@@ -98,12 +101,25 @@ void configureMenuList() {
   //   test_mode.addNode(std::make_shared<TreeNode>("back", MenuTree::go_back));
   // }
   // 
-  TreeNode sleep_mode = TreeNode("sleep", enterDeepSleep);
+  TreeNode mpu_data = TreeNode(MPU_DATA_DIR_NAME);
+  {
+    // mpu_data.addNode(std::make_shared<TreeNode>("back", MenuTree::go_back));
+    // mpu_data.addNode(std::make_shared<TreeNode>("hide UI", 
+    //   [](std::shared_ptr<MenuTree> menuTree) {
+    //       Settings::show_ui = false;
+    //   })
+    // );
+  }
+  TreeNode navigation_data = TreeNode(NAVIGATION_DIR_NAME);
+  {}
+  TreeNode sleep_mode = TreeNode(SLEEP_DIR_NAME, enterDeepSleep);
 
 
   menu_list.menu->getRoot()->addNode(std::make_shared<TreeNode>(live_mode));
   menu_list.menu->getRoot()->addNode(std::make_shared<TreeNode>(manual_mode));
   // menu_list.menu->getRoot()->addNode(std::make_shared<TreeNode>(settings_mode));
   // menu_list.menu->getRoot()->addNode(std::make_shared<TreeNode>(test_mode));
+  menu_list.menu->getRoot()->addNode(std::make_shared<TreeNode>(mpu_data));
+  menu_list.menu->getRoot()->addNode(std::make_shared<TreeNode>(navigation_data));
   menu_list.menu->getRoot()->addNode(std::make_shared<TreeNode>(sleep_mode));
 }

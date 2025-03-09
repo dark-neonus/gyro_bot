@@ -90,12 +90,12 @@ void events_handler(std::shared_ptr<MenuTree> menu_list) {
     inactiveCounter.setValue(0);
     display.setCursor(SCREEN_WIDTH - 4 * 7, 5);
     display.print("L");
-    if (Settings::show_ui) {
-      menu_list->goBack();
-    }
-    else {
-      Settings::show_ui = true;
-    }
+    // if (Settings::show_ui) {
+    menu_list->goBack();
+    // }
+    // else {
+    Settings::show_ui = true;
+    // }
     left_button_counter.setValue(0);
   }
   if (up_button_counter.isMax()) {

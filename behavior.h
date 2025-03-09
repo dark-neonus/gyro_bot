@@ -7,6 +7,7 @@
 #include "src/Counter.h"
 #include "display.h"
 #include "configure.h"
+#include "mpu.h"
 
 #define BOTTOM_ACCELERATION_TRIGER 0.3
 #define TOP_ACCELERATION_TRIGER 1.7
@@ -29,6 +30,21 @@ Counter tensionCounter = Counter(TENSION_TIME);
 Counter DIZZY1Counter = Counter(DIZZY1_TIME);
 
 void update_behavior(std::shared_ptr<MenuTree> menu) {
+  if (mpu::accelMagnitude < BOTTOM_ACCELERATION_TRIGER || mpu::accelMagnitude > TOP_ACCELERATION_TRIGER) {
+    shakeTriggerCouner.increase();
+  }
+  else {
+    shakeTriggerCouner.decrease();
+  }
+
+  if ((Settings::live_mode) &&
+    (Settings::bot_state == BotState::TIRED1 || Settings::bot_state == BotState::TIRED2) &&
+    (mpu::accelMagnitude < 0.5 || mpu::accelMagnitude > 1.5 ||
+      abs(mpu::gX) + abs(mpu::gY) + abs(mpu::gZ) > 180)) {
+    inactiveCounter.setValue(0);
+    Settings::bot_state = BotState::NORMAL;
+  }
+
   Settings::live_mode = true;
   if (menu->getDirectoryName() == MANUAL_DIR_NAME) {
     Settings::live_mode = false;

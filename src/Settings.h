@@ -20,6 +20,7 @@ namespace Settings {
 
   extern bool show_ui;
   extern bool live_mode;
+  extern bool enable_face;
   extern BotState bot_state;
   extern float face_sensitivity;
 
