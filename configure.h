@@ -14,7 +14,12 @@ MenuListObject menu_list = MenuListObject();
 #define LIVE_DIR_NAME "live"
 #define MANUAL_DIR_NAME "manual"
 #define MPU_DATA_DIR_NAME "mpu_data"
+
+#define U3D_DIR_NAME "3d"
 #define NAVIGATION_DIR_NAME "navigation"
+#define AXIS_DIR_NAME "axis"
+#define FIRE_DIR_NAME "fire"
+
 #define SLEEP_DIR_NAME "sleep"
 
 void configureMenuList() {
@@ -110,8 +115,13 @@ void configureMenuList() {
     //   })
     // );
   }
-  TreeNode navigation_data = TreeNode(NAVIGATION_DIR_NAME);
-  {}
+  TreeNode u3d_menu = TreeNode(U3D_DIR_NAME);
+  {
+    u3d_menu.addNode(std::make_shared<TreeNode>("back", MenuTree::go_back));
+    u3d_menu.addNode(std::make_shared<TreeNode>(NAVIGATION_DIR_NAME));
+    u3d_menu.addNode(std::make_shared<TreeNode>(AXIS_DIR_NAME));
+    u3d_menu.addNode(std::make_shared<TreeNode>(FIRE_DIR_NAME));
+  }
   TreeNode sleep_mode = TreeNode(SLEEP_DIR_NAME, enterDeepSleep);
 
 
@@ -120,6 +130,6 @@ void configureMenuList() {
   // menu_list.menu->getRoot()->addNode(std::make_shared<TreeNode>(settings_mode));
   // menu_list.menu->getRoot()->addNode(std::make_shared<TreeNode>(test_mode));
   menu_list.menu->getRoot()->addNode(std::make_shared<TreeNode>(mpu_data));
-  menu_list.menu->getRoot()->addNode(std::make_shared<TreeNode>(navigation_data));
+  menu_list.menu->getRoot()->addNode(std::make_shared<TreeNode>(u3d_menu));
   menu_list.menu->getRoot()->addNode(std::make_shared<TreeNode>(sleep_mode));
 }

@@ -47,12 +47,12 @@ public:
     }
 
     // Dot product
-    float dot(const Vec3& v) {
+    float dot(const Vec3& v) const {
         return x * v.x + y * v.y + z * v.z;
     }
 
     // Cross product (if needed for certain 3D operations)
-    Vec3 cross(const Vec3& v) {
+    Vec3 cross(const Vec3& v) const {
         return Vec3(
             y * v.z - z * v.y,
             z * v.x - x * v.z,
@@ -60,15 +60,29 @@ public:
         );
     }
 
+    float length() const {
+      return std::sqrt(x * x + y * y + z * z);
+    }
+
     // Normalize the vector (make its length = 1)
-    Vec3 normalize() {
-        float length = std::sqrt(x * x + y * y + z * z);
-        return Vec3(x / length, y / length, z / length);
+    Vec3 normalize() const {
+        float v_len = length();
+        return Vec3(x / v_len, y / v_len, z / v_len);
     }
 
     static Vec3 get_perpendicular(Vec3 v1, Vec3 v2) {
       return v1.cross(v2).normalize();
     }
+
+    static Vec3 rotateAroundAxis(Vec3 p, Vec3 axis, double theta) {
+      Vec3 k = axis.normalize();  // Ensure axis is a unit vector
+      Vec3 p_rotated = 
+          p * std::cos(theta) +
+          k.cross(p) * std::sin(theta) +
+          k * (k.dot(p) * (1 - std::cos(theta)));
+      return p_rotated;
+    }
 };
+
 
 #endif

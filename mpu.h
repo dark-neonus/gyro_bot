@@ -5,6 +5,8 @@
 
 #include <MPU9250_asukiaaa.h>
 
+#include "src/3d/render.h"
+
 #ifdef _ESP32_HAL_I2C_H_
 #define SDA_PIN 8
 #define SCL_PIN 9
@@ -18,11 +20,13 @@ float accelMagnitude = 1.0f;
 float gX;
 float gY;
 float gZ;
+float rX = 0.0f;
+float rY = 0.0f;
+float rZ = 0.0f;
 float mDirection;
 float mX;
 float mY;
 float mZ;
-
 }
 
 MPU9250_asukiaaa mpuSensor;
@@ -58,6 +62,9 @@ void updateMPUData() {
     mpu::aX = mpuSensor.accelX();
     mpu::aY = mpuSensor.accelY();
     mpu::aZ = mpuSensor.accelZ();
+
+    // u3D::gyro_coordinates.z_axis = Vec3(mpu::aX, mpu::aY, mpu::aZ);
+    u3D::update_gyro_coordinates(mpu::aX, mpu::aY, mpu::aZ, mpu::rX, mpu::rY, mpu::rZ);
     // aSqrt = mpuSensor.accelSqrt();
     mpu::accelMagnitude = mpuSensor.accelSqrt();
     // Serial.println("accelX: " + String(aX));
@@ -73,6 +80,10 @@ void updateMPUData() {
     mpu::gX = mpuSensor.gyroX();
     mpu::gY = mpuSensor.gyroY();
     mpu::gZ = mpuSensor.gyroZ();
+
+    mpu::rX += (abs(mpu::gX) > 4) ? mpu::gX * deltaTime : 0.0f;
+    mpu::rY += (abs(mpu::gY) > 4) ? mpu::gY * deltaTime : 0.0f;
+    mpu::rZ += (abs(mpu::gZ) > 4) ? mpu::gZ * deltaTime : 0.0f;
     // Serial.println("gyroX: " + String(gX));
     // Serial.println("gyroY: " + String(gY));
     // Serial.println("gyroZ: " + String(gZ));

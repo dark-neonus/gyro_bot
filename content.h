@@ -9,8 +9,9 @@
 #include "src/Settings.h"
 
 #include "src/console/console.h"
-#include "src/navigation/Vec3.h"
-#include "src/navigation/render.h"
+#include "src/3d/Vec3.h"
+#include "src/3d/render.h"
+#include "src/3d/3d_fire.h"
 
 #include "face.h"
 #include "display.h"
@@ -38,7 +39,13 @@ void draw_content(Adafruit_SSD1306& display) {
     }));
   }
   if (menu_list.menu->getDirectoryName() == NAVIGATION_DIR_NAME) {
-    test_render(display, Vec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2));
+    test_render(display, Vec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), mpu::aX, mpu::aY, mpu::aZ);
+  }
+  if (menu_list.menu->getDirectoryName() == AXIS_DIR_NAME) {
+    render_axis(display, Vec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), mpu::aX, mpu::aY, mpu::aZ);
+  }
+  if (menu_list.menu->getDirectoryName() == FIRE_DIR_NAME) {
+    fire_3d::draw_fire(display, Vec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2));
   }
   if (Settings::enable_face) {
     face.draw(display, content_pos +
@@ -51,9 +58,15 @@ void draw_content(Adafruit_SSD1306& display) {
 void update_content() {
   Settings::enable_face = true;
   if (menu_list.menu->getDirectoryName() == MPU_DATA_DIR_NAME ||
-      menu_list.menu->getDirectoryName() == NAVIGATION_DIR_NAME) {
+      menu_list.menu->getDirectoryName() == NAVIGATION_DIR_NAME ||
+      menu_list.menu->getDirectoryName() == AXIS_DIR_NAME ||
+      menu_list.menu->getDirectoryName() == FIRE_DIR_NAME
+      ) {
     Settings::enable_face = false;
     Settings::show_ui = false;
+  }
+  if (menu_list.menu->getDirectoryName() == FIRE_DIR_NAME) {
+    fire_3d::update_fire();
   }
   if (Settings::enable_face) {
     update_behavior(menu_list.menu);

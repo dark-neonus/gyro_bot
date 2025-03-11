@@ -23,6 +23,9 @@ public:
   float c();
   float d();
 
+  bool is_point_in_front(Vec3 p) {
+    return normal.dot(p - point) > 0;  // True if point is in front
+  }
 };
 
 Vec2 project_on_plane(Vec3 v, Plane plane);
