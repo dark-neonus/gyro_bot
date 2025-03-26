@@ -20,6 +20,7 @@ float accelMagnitude = 1.0f;
 float gX;
 float gY;
 float gZ;
+float gSum;
 float rX = 0.0f;
 float rY = 0.0f;
 float rZ = 0.0f;
@@ -80,6 +81,7 @@ void updateMPUData() {
     mpu::gX = mpuSensor.gyroX();
     mpu::gY = mpuSensor.gyroY();
     mpu::gZ = mpuSensor.gyroZ();
+    mpu::gSum = abs(mpu::gX) + abs(mpu::gY) + abs(mpu::gZ);
 
     mpu::rX += (abs(mpu::gX) > 4) ? mpu::gX * deltaTime : 0.0f;
     mpu::rY += (abs(mpu::gY) > 4) ? mpu::gY * deltaTime : 0.0f;

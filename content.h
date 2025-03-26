@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include <format>
+#include <cstdio>  // For sprintf
 
 #include "src/Vec2.h"
 #include "src/Counter.h"
@@ -28,15 +28,24 @@ Console console = Console(Vec2(0.0f, 0.0f));
 void draw_content(Adafruit_SSD1306& display) {
   content_pos = Vec2(Settings::show_ui ? 30 : 0, 0.0f);
   if (menu_list.menu->getDirectoryName() == MPU_DATA_DIR_NAME) {
-    console.draw(display, content_pos, std::vector<std::string>({
-      std::format("aX: {:.1f}", mpu::aX),
-      std::format("aY: {:.1f}", mpu::aY),
-      std::format("aZ: {:.1f}", mpu::aZ),
-      std::string("--------"),
-      std::format("gX: {:.1f}", mpu::gX),
-      std::format("gY: {:.1f}", mpu::gY),
-      std::format("gZ: {:.1f}", mpu::gZ)
-    }));
+    char buffer[32];
+    std::vector<std::string> data;
+    
+    sprintf(buffer, "aX: %.1f", mpu::aX);
+    data.push_back(buffer);
+    sprintf(buffer, "aY: %.1f", mpu::aY);
+    data.push_back(buffer);
+    sprintf(buffer, "aZ: %.1f", mpu::aZ);
+    data.push_back(buffer);
+    data.push_back("--------");
+    sprintf(buffer, "gX: %.1f", mpu::gX);
+    data.push_back(buffer);
+    sprintf(buffer, "gY: %.1f", mpu::gY);
+    data.push_back(buffer);
+    sprintf(buffer, "gZ: %.1f", mpu::gZ);
+    data.push_back(buffer);
+    
+    console.draw(display, content_pos, data);
   }
   if (menu_list.menu->getDirectoryName() == NAVIGATION_DIR_NAME) {
     test_render(display, Vec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), mpu::aX, mpu::aY, mpu::aZ);

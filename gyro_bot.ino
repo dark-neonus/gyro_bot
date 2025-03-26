@@ -1,3 +1,5 @@
+#pragma GCC diagnostic ignored "-Wc++20-compat"
+
 #include "src/Vec2.h"
 #include "src/Counter.h"
 #include "src/Settings.h"
